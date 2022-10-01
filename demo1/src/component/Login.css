@@ -1,0 +1,41 @@
+.bg-container{
+    background-image:linear-gradient(yellow,white);
+    background-size: cover;
+    margin:50px;
+    padding: 10px;
+}
+.heading{
+    /* background-color:white; */
+    color:purple;
+    font-family: "Courier New";
+    font-style: oblique;
+    font-size: 60px;
+    text-decoration:dotted;
+    font-weight: bold;
+    padding-bottom: 30px;
+}
+
+.error{
+    color:red;
+    font-size: 15px;
+    padding-bottom: 20px;
+}
+.form{
+    margin:10px;
+    border-width: 0px;
+    border-radius: 5px;
+    height: 40px;
+    width:300px;
+}
+.main-heading{
+    text-align:center;
+    color:blue;
+    margin-left:100px;
+    margin-top: 200px;
+}
+
+.icon{
+    color: black;
+    height: 50px;
+    width: 50px;
+}
