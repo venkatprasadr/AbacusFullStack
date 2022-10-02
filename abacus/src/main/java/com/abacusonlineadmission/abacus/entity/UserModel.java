@@ -11,6 +11,9 @@ import javax.persistence.Table;
 
 
 
+
+
+
 @Entity
 @Table(name = "User_Table")
 
@@ -22,6 +25,11 @@ public class UserModel {
 	private String username;
 	private String mobileNumber;
 	private String userRole;
+	
+
+	@OneToMany(targetEntity = AdmissionModel.class, cascade = CascadeType.ALL)
+	@JoinColumn(name="admissions_key",referencedColumnName="email")
+	private List<AdmissionModel> admissions;
 	
 
 	
@@ -56,6 +64,13 @@ public class UserModel {
 		this.userRole = userRole;
 	}
 	
+	public List<AdmissionModel> getAdmissions() {
+		return admissions;
+	}
+
+	public void setAdmissions(List<AdmissionModel> admissions) {
+		this.admissions = admissions;
+	}
 	
 
 }
