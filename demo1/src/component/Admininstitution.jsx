@@ -1,14 +1,15 @@
 
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Navbar,Container,Nav,Dropdown,Modal,Button,Form,Table,Row,Col,Tr,Th } from 'react-bootstrap';
 import axios from 'axios';
 import swal from 'sweetalert' 
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { VscTrash,VscNewFile,VscEdit } from "react-icons/vsc";
 
 const AdminInstitution = () =>{
    
     const instituteName = useRef();
-    const instituteDescription = useRef();
     const instituteAddress = useRef();
     const mobile = useRef();
     const email = useRef();
@@ -20,7 +21,7 @@ const AdminInstitution = () =>{
    
 
     const getAllInstitute = () =>{
-        axios.get("http://localhost:8082/admin/viewInstitute")
+        axios.get("http://localhost:8081/admin/viewInstitute")
         .then((resp)=>{
             setAllInstitution(resp.data);
         })
@@ -39,24 +40,22 @@ const AdminInstitution = () =>{
 
     const handleAdd = ()=>{
         const instituteNameV = instituteName.current.value;
-        const instituteDescriptionV = instituteDescription.current.value;
         const instituteAddressV = instituteAddress.current.value;
         const mobileV = mobile.current.value;
         const emailV = email.current.value;
         const obj = {
             instituteName : instituteNameV,
-            instituteDescription : instituteDescriptionV,
             instituteAddress : instituteAddressV,
             mobile:mobileV,
             email:emailV
         }
-        axios.post("http://localhost:8082/admin/addInstitute",obj)
+        axios.post("http://localhost:8081/admin/addInstitute",obj)
         .then((res)=>{
             if(res.data=="Institute added"){
                 getAllInstitute();
               
                 swal({
-                    title: "Error",
+                    title: "success",
                     text: "Institute Added",
                     icon: "success",
                   });
@@ -78,13 +77,12 @@ const AdminInstitution = () =>{
         setShowEdit(false);
         const obj = {
             instituteName : instituteName.current.value? instituteName.current.value: editData.instituteName  ,
-            instituteDescription : instituteDescription.current.value? instituteDescription.current.value: editData.instituteDescription  ,
             instituteAddress : instituteAddress.current.value? instituteAddress.current.value: editData.instituteAddress  ,
             mobile : mobile.current.value? mobile.current.value: editData.mobile  ,
             email : email.current.value? email.current.value: editData.email  
           }
 
-          axios.put("http://localhost:8082/admin/editInstitute/"+editData.instituteId,obj)
+          axios.put("http://localhost:8081/admin/editInstitute/"+editData.instituteId,obj)
           .then((resp)=>{
             if(resp.data=="Institute edited"){
                
@@ -101,7 +99,7 @@ const AdminInstitution = () =>{
     }
 
     const handleDelete = (data)=>{
-            axios.delete("http://localhost:8082/admin/deleteInstitute?instituteId="+data.instituteId)
+            axios.delete("http://localhost:8081/admin/deleteInstitute?instituteId="+data.instituteId)
             .then((resp)=>{
                 if(resp.data=="Institute deleted"){
                     getAllInstitute();
@@ -135,22 +133,39 @@ const AdminInstitution = () =>{
 
     return(
         <>
+         <div class = "container  mt-5 ">
+            <h2 style={{color:'blue',fontWeight:'bold',fontStyle:'italic'}}>Welcome Admin You can Add Institute Here</h2>
+                <button type="button" id="login_btn" class="btn btn-primary " onClick={()=>{setShowAddPopUp(!showAddPopUp)}} > <VscNewFile className='icons'/>Add Institute</button><br/><br/>
+            </div>
 
             {
                 showAddPopUp?
                 <>
-                   <center>
-                   <div className="bg-container" style={{width:'250px'}}>
-                        <input type="text" id="instituteName" ref={instituteName} class="col-3 form-control " placeholder=" Institute Name"/><br/>
-                        <input type="text" id="instituteDescription" ref={instituteDescription} class="col-3 form-control " placeholder="Institute Description" /><br/>
-                        <input type="text" id="instituteAddress" ref={instituteAddress} class="col-3 form-control " placeholder="Institute Addresss" /><br/>
-                        <input type="text" id="mobile" ref={mobile} class="col-3 form-control " placeholder="Institute Mobile" /><br/>
-                        <input type="text" id="email" ref={email} class="col-3 form-control " placeholder="Institute email" /><br/>
-                        <button type="button" id="login_btn" class="btn btn-primary" onClick={handleAdd}>Add</button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" id="close_btn" class="btn btn-warning" onClick={()=>{setShowAddPopUp(false)}}>close</button><br/>
+                   
 
-                    </div>
-                   </center>
+                   <center>
+            <div class="m-3 ">
+        <Card style={{ width: '18rem',backgroundColor:'grey' }}>
+        <Card.Img variant="top" src="https://image.shutterstock.com/image-photo/atlanta-march-24-tech-tower-260nw-1348284224.jpg" />
+        <Card.Body>
+          <Card.Title> Add Institute here</Card.Title>
+          <Card.Text>
+            Admin you can add Institute here
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroup.Item><input type="text" id="instituteName" ref={instituteName} class="col-3 form-control " placeholder=" Institute Name"/></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="instituteAddress" ref={instituteAddress} class="col-3 form-control " placeholder="Institute Addresss" /></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="mobile" ref={mobile} class="col-3 form-control " placeholder="Institute Mobile" /></ListGroup.Item>
+          <ListGroup.Item><input type="text" id="email" ref={email} class="col-3 form-control " placeholder="Institute email" /></ListGroup.Item>
+        </ListGroup>
+        <Card.Body >
+        <button type="button" id="login_btn" class="btn btn-primary" onClick={handleAdd}>Add</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" id="close_btn" class="btn btn-warning" onClick={()=>{setShowAddPopUp(false)}}>close</button><br/>
+        </Card.Body>
+      </Card>  
+      </div> 
+                </center>
                 </>
                 :null
             }
@@ -158,79 +173,72 @@ const AdminInstitution = () =>{
             {
                 showEdit?
                 <>
-                    <div className="bg-container" style={{width:'250px'}}>
-                        <input type="text" id="instituteName" ref={instituteName} class="col-3 form-control " placeholder=" Institute Name"/><br/>
-                        <input type="text" id="instituteDescription" ref={instituteDescription} class="col-3 form-control " placeholder="Institute Description" /><br/>
-                        <input type="text" id="instituteAddress" ref={instituteAddress} class="col-3 form-control " placeholder="Institute Addresss" /><br/>
-                        <input type="text" id="mobile" ref={mobile} class="col-3 form-control " placeholder="Institute Mobile" /><br/>
-                        <input type="text" id="email" ref={email} class="col-3 form-control " placeholder="Institute email" /><br/>
-                        <button type="button" id="login_btn" class="btn btn-primary" onClick={handleEdit}>update</button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" id="close_btn" class="btn btn-warning" onClick={()=>{setShowEdit(false)}}>close</button><br/>
-
-                    </div>
+                    <center>
+<div class="m-3 ">
+        <Card style={{ width: '18rem',backgroundColor:'grey' }}>
+        <Card.Img variant="top" src="https://image.shutterstock.com/image-photo/atlanta-march-24-tech-tower-260nw-1348284224.jpg" />
+        <Card.Body>
+          <Card.Title> Edit Institute here</Card.Title>
+          <Card.Text>
+            Admin you can add Institute here
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroup.Item><input type="text" id="instituteName" ref={instituteName} class="col-3 form-control " placeholder=" Institute Name"/></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="instituteAddress" ref={instituteAddress} class="col-3 form-control " placeholder="Institute Addresss" /></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="mobile" ref={mobile} class="col-3 form-control " placeholder="Institute Mobile" /></ListGroup.Item>
+          <ListGroup.Item><input type="text" id="email" ref={email} class="col-3 form-control " placeholder="Institute email" /></ListGroup.Item>
+        </ListGroup>
+        <Card.Body >
+        <button type="button" id="login_btn" class="btn btn-primary" onClick={handleEdit}>update</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" id="close_btn" class="btn btn-warning" onClick={()=>{setShowEdit(false)}}>close</button><br/>
+        </Card.Body>
+      </Card>  
+      </div> 
+                </center>
                 </>
                 :null
             }   
 
 
-            <div class = "container col-3 mt-5 ">
-              
-                <button type="button" id="login_btn" class="btn btn-primary " onClick={()=>{setShowAddPopUp(!showAddPopUp)}} >Add Institute</button><br/><br/>
-            </div>
+           
 
-            <Table style = {{backgroundColor:"lightblue"}}>
-                <thead>
-                    <tr>
-                        <th>Institute Id</th>
-                        <th>Institute Name</th>
-                        <th>Institute Description</th>
-                        <th>Institute Address</th>
-                        <th>Institute mobile</th>
-                        <th>Institute email</th>
-                        <th>Action</th>
-                    </tr>
-                </thead><br/>
-                <tbody>
-                    {
-                        allInstitution && allInstitution.map((val)=>{
-                            return(<tr>
-                                <td style={{
-                             padding: '10px',
-                             border: 'solid 1px gray',
-                           }}>{val.instituteId}</td>
-                                <td style={{
-                             padding: '10px',
-                             border: 'solid 1px gray',
-                           }}>{val.instituteName}</td>
-                                <td style={{
-                             padding: '10px',
-                             border: 'solid 1px gray',
-                           }}>{val.instituteDescription}</td>
-                                <td style={{
-                             padding: '10px',
-                             border: 'solid 1px gray',
-                           }}>{val.instituteAddress}</td>
-                                <td style={{
-                             padding: '10px',
-                             border: 'solid 1px gray',
-                           }}>{val.mobile}</td>
-                                <td style={{
-                             padding: '10px',
-                             border: 'solid 1px gray',
-                           }}>{val.email}</td>
-                                <td style={{
-                             padding: '10px',
-                             border: 'solid 1px gray',
-                           }}>
-                             <button type="button" id="login_btn" class="btn btn-info" onClick={()=>{setShowEdit(true);setEditData(val)}}>Edit</button>&nbsp;&nbsp;
-                                    <button type="button" id="login_btn" class="btn btn-danger" onClick={()=>{handleDelete(val)}}>Delete</button>
-                                </td>
-                            </tr>)
-                        })
-                    }
-                </tbody>
-            </Table>
+            
                     
+                <div class="d-flex flex-row ml-5 mr-5">
+            {
+                allInstitution && allInstitution.map((value)=>{
+       return(
+<center>
+<div class="m-3 ">
+        <Card style={{ width: '18rem',backgroundColor:'grey' }}>
+        <Card.Img variant="top" src="https://image.shutterstock.com/image-photo/atlanta-march-24-tech-tower-260nw-1348284224.jpg" />
+        <Card.Body>
+          <Card.Title>Course Details</Card.Title>
+          <Card.Text>
+            Below u can see the details of the course
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroup.Item> Institute Id : {value.instituteId}</ListGroup.Item>
+          <ListGroup.Item>Institute Name : {value.instituteName}</ListGroup.Item>
+          <ListGroup.Item> Institute Address : {value.instituteAddress}</ListGroup.Item>
+          <ListGroup.Item> Institute Mobile no. : {value.mobile}</ListGroup.Item>
+          <ListGroup.Item> Institute email : {value.email}</ListGroup.Item>
+          
+        </ListGroup>
+        <Card.Body>
+  
+         <VscEdit className="icons"s onClick={()=>{setShowEdit(true);setEditData(value)}}/>&nbsp;&nbsp;
+        <VscTrash className="icons1" onClick={()=>{handleDelete(value)}}/>                
+        </Card.Body>
+      </Card>  
+      </div> 
+</center>
+       )
+    })
+        }
+        </div>
         </>
     )
 }

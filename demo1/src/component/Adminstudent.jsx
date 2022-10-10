@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Navbar,Container,Nav,Dropdown,Modal,Button,Form,Table,Row,Col,Tr,Th } from 'react-bootstrap';
 import axios from 'axios'; 
 import swal from 'sweetalert'
 import './Login.css'
-import * as Icon from 'react-bootstrap-icons'
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import { VscTrash,VscNewFile,VscEdit } from "react-icons/vsc";
+
 
 
 const AdminStudent = () =>{
@@ -133,18 +135,37 @@ const AdminStudent = () =>{
     
     return (
         <>
+
+<div class = "container  mt-5 ">
+                <h2 style={{color:'blue',fontWeight:'bold',fontStyle:'italic'}}>Welcome Admin You can Add Student Here</h2>
+                <button type=" button" id="addStudent" class="btn btn-primary" onClick={()=>{setShowAddPopUp(!showAddPopUp)}}> <VscNewFile className='icons'/> Add Student</button><br/><br/>
+            </div>
         {
                 showEditPopUp?
                 <>
                     <center>
-                    <div className="bg-container" style={{width:'250px'}}>
-                        <input type="text" id="studentName" ref={studentName} class="col-3 form-control " placeholder=" Student Name"/><br/>
-                        <input type="text" id="studentAddress" ref={studentAddress} class="col-3 form-control " placeholder="Student Address" /><br/>
-                        <input type="text" id="studentMobile" ref={studentMobile} class="col-3 form-control " placeholder="Student Mobile" /><br/>
-                        <input type="text" id="studentAge" ref={studentAge} class="col-3 form-control " placeholder="Student Age" /><br/>
-                        <button type="button" id="login_btn" class="btn btn-secondary" onClick={handleEdit}>Update</button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" id="close_btn" class="btn btn-secondary" onClick={()=>{setShowEditPopUp(false)}}>close</button><br/>
-                    </div>
+<div class="m-3 ">
+        <Card style={{ width: '18rem',backgroundColor:'grey' }}>
+        <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNL_8pjNhr6baJnzC5XuMBl3HWBB3zOKWMvkcttCpfhtekH_u2luJxjz8RHBx-eKCUcjc&usqp=CAU" />
+        <Card.Body>
+          <Card.Title>Edit Course Here</Card.Title>
+          <Card.Text>
+            Admin you can edit the course here
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroup.Item><input type="text" id="studentName" ref={studentName} class="col-3 form-control " placeholder=" Student Name"/></ListGroup.Item>
+          <ListGroup.Item><input type="text" id="studentAddress" ref={studentAddress} class="col-3 form-control " placeholder="Student Address" /></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="studentMobile" ref={studentMobile} class="col-3 form-control " placeholder="Student Mobile" /></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="studentAge" ref={studentAge} class="col-3 form-control " placeholder="Student Age" /></ListGroup.Item>
+          
+        </ListGroup>
+        <Card.Body >
+        <button type="button" id="login_btn" class="btn btn-primary" onClick={handleEdit}>Update</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" id="close_btn" class="btn btn-warning" onClick={()=>{setShowEditPopUp(false)}}>close</button><br/>
+        </Card.Body>
+      </Card>  
+      </div> 
                     </center>
                 </>
                 :null
@@ -152,57 +173,71 @@ const AdminStudent = () =>{
             {
                 showAddPopUp?
                 <>
-                   <center>
-                   <div className="bg-container" style={{width:'250px'}}>
-                        <input type="text" id="studentName" ref={studentName} class="col-3 form-control " placeholder=" Student Name"/><br/>
-                        <input type="text" id="studentAddress" ref={studentAddress} class="col-3 form-control " placeholder="Student Address" /><br/>
-                        <input type="text" id="studentMobile" ref={studentMobile} class="col-3 form-control " placeholder="Student Mobile" /><br/>
-                        <input type="text" id="studentAge" ref={studentAge} class="col-3 form-control " placeholder="Student Age" /><br/>
-                        <button type="button" id="login_btn" class="btn btn-primary" onClick={handleAdd}>Add</button>&nbsp;&nbsp;&nbsp;
-                        <button type="button" id="close_btn" class="btn btn-warning" onClick={()=>{setShowAddPopUp(false)}}>close</button><br/>
 
-                    </div>
-                   </center>
+                   <center>
+<div class="m-3 ">
+        <Card style={{ width: '18rem',backgroundColor:'grey' }}>
+        <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNL_8pjNhr6baJnzC5XuMBl3HWBB3zOKWMvkcttCpfhtekH_u2luJxjz8RHBx-eKCUcjc&usqp=CAU" />
+        <Card.Body>
+          <Card.Title>Edit Course Here</Card.Title>
+          <Card.Text>
+            Admin you can edit the course here
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroup.Item><input type="text" id="studentName" ref={studentName} class="col-3 form-control " placeholder=" Student Name"/></ListGroup.Item>
+          <ListGroup.Item><input type="text" id="studentAddress" ref={studentAddress} class="col-3 form-control " placeholder="Student Address" /></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="studentMobile" ref={studentMobile} class="col-3 form-control " placeholder="Student Mobile" /></ListGroup.Item>
+          <ListGroup.Item> <input type="text" id="studentAge" ref={studentAge} class="col-3 form-control " placeholder="Student Age" /></ListGroup.Item>
+          
+        </ListGroup>
+        <Card.Body >
+        <button type="button" id="login_btn" class="btn btn-primary" onClick={handleAdd}>Add</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" id="close_btn" class="btn btn-warning" onClick={()=>{setShowAddPopUp(false)}}>close</button>
+        </Card.Body>
+      </Card>  
+      </div> 
+                    </center>
                 </>
                 :null
             }
 
-            <div class = "container col-3 mt-5 ">
-                <button type=" button" id="addStudent" class="btn btn-primary" onClick={()=>{setShowAddPopUp(!showAddPopUp)}} >Add Student</button><br/><br/>
-            </div>
+           
             
-            <Table style = {{backgroundColor:"lightblue"}}>
-                <thead>
-                    <tr>
-                        <th>Student Id</th>
-                        <th>Student Name</th>
-                        <th>Student Address</th>
-                        <th>Student Mobile</th>
-                        <th>Student Age</th>
-                        <th>Action</th>
-                    </tr>
-                </thead><br/>
-                <tbody>
-                    {
-                        allStudents && allStudents.map((val)=>{
-                            return(
-                                <tr>
-                                    <td style={{padding: '10px',border: 'solid 1px gray',}}> {val.studentId}</td>
-                                    <td style={{padding: '10px',border: 'solid 1px gray',}}> {val.studentName}</td>
-                                    <td style={{padding: '10px',border: 'solid 1px gray',}}> {val.address}</td>
-                                    <td style={{padding: '10px',border: 'solid 1px gray',}}> {val.mobile}</td>
-                                    <td style={{padding: '10px',border: 'solid 1px gray',}}> {val.age}</td>
-                                    <td style={{padding: '10px',border: 'solid 1px gray',}}>
-                                    <button type="button" id="login_btn" class="btn btn-info" onClick={()=>{setEditData(val);setShowEditPopUp(true)}}>Edit</button>&nbsp;&nbsp;
-                                        <button type="button" id="login_btn" class="btn btn-warning" onClick={()=>{handleDelete(val)}}>Delete</button>
-                                       
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
+
+            <div class="d-flex flex-row ml-5 mr-5">           
+{
+    allStudents && allStudents.map((value)=>{
+       return(
+<center>
+<div class="m-3 ">
+        <Card style={{ width: '18rem',backgroundColor:'grey' }}>
+        <Card.Img variant="top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNL_8pjNhr6baJnzC5XuMBl3HWBB3zOKWMvkcttCpfhtekH_u2luJxjz8RHBx-eKCUcjc&usqp=CAU" />
+        <Card.Body>
+          <Card.Title>Student Details</Card.Title>
+          <Card.Text>
+            Below u can see the details of the Student
+          </Card.Text>
+        </Card.Body>
+        <ListGroup className="list-group-flush">
+          <ListGroup.Item>Student Id : {value.studentId}</ListGroup.Item>
+          <ListGroup.Item> Student Name :{value.studentName}</ListGroup.Item>
+          <ListGroup.Item> Student Mobile no. : {value.mobile}</ListGroup.Item>
+          <ListGroup.Item> Student Address : {value.address}</ListGroup.Item>
+          <ListGroup.Item> Student age : {value.age}</ListGroup.Item>
+          
+        </ListGroup>
+        <Card.Body>
+        <VscEdit className="icons"s onClick={()=>{setEditData(value);setShowEditPopUp(true)}}/>&nbsp;&nbsp;
+        <VscTrash className="icons1" onClick={()=>{handleDelete(value)}}/>                    
+        </Card.Body>
+      </Card>  
+      </div> 
+</center>
+       )
+    })
+}
+</div>
         
         </>
     )
